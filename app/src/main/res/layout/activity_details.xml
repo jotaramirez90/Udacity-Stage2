@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context="com.jota.udacity.project2.ui.features.details.view.DetailsActivity"
+    >
+
+  <android.support.design.widget.AppBarLayout
+      android:id="@+id/app_bar"
+      android:fitsSystemWindows="true"
+      android:layout_height="@dimen/app_bar_height"
+      android:layout_width="match_parent"
+      android:theme="@style/AppTheme.AppBarOverlay"
+      >
+
+    <android.support.design.widget.CollapsingToolbarLayout
+        android:id="@+id/toolbar_layout"
+        android:fitsSystemWindows="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_scrollFlags="scroll|exitUntilCollapsed"
+        app:contentScrim="?attr/colorPrimary"
+        >
+
+      <ImageView
+          android:id="@+id/iv_poster"
+          android:layout_width="match_parent"
+          android:layout_height="match_parent"
+          android:fitsSystemWindows="true"
+          android:scaleType="centerCrop"
+          app:layout_collapseMode="parallax"
+          android:foreground="@drawable/fg_movie_details"
+          />
+
+      <android.support.v7.widget.Toolbar
+          android:id="@+id/toolbar"
+          android:layout_height="?attr/actionBarSize"
+          android:layout_width="match_parent"
+          app:layout_collapseMode="pin"
+          app:popupTheme="@style/AppTheme.PopupOverlay"
+          />
+
+    </android.support.design.widget.CollapsingToolbarLayout>
+  </android.support.design.widget.AppBarLayout>
+
+  <android.support.v4.widget.NestedScrollView
+      app:layout_behavior="@string/appbar_scrolling_view_behavior"
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      tools:context="com.jota.udacity.project2.ui.common.ScrollingActivity"
+      >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_margin="@dimen/text_margin"
+        >
+      <ImageView
+          android:id="@+id/iv_date"
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:src="@drawable/ic_date"
+          />
+
+      <TextView
+          android:id="@+id/tv_date"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="16sp"
+          android:textStyle="bold"
+          android:layout_alignParentTop="true"
+          android:layout_alignParentRight="true"
+          android:layout_alignParentEnd="true"
+          android:layout_alignBottom="@+id/iv_date"
+          android:layout_toRightOf="@+id/iv_date"
+          android:layout_toEndOf="@+id/iv_date"
+          android:gravity="center_vertical"
+          android:layout_marginLeft="6dp"
+          />
+
+      <ImageView
+          android:layout_width="30dp"
+          android:layout_height="30dp"
+          android:layout_below="@id/tv_date"
+          android:id="@+id/iv_rating"
+          android:layout_marginTop="4dp"
+          android:src="@drawable/ic_rating"
+          />
+
+      <TextView
+          android:id="@+id/tv_rating"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="16sp"
+          android:layout_alignParentRight="true"
+          android:layout_alignParentEnd="true"
+          android:layout_alignBottom="@+id/iv_rating"
+          android:layout_toRightOf="@+id/iv_date"
+          android:layout_toEndOf="@+id/iv_date"
+          android:layout_alignTop="@+id/iv_rating"
+          android:gravity="center_vertical"
+          android:layout_marginLeft="6dp"
+          />
+
+      <TextView
+          android:id="@+id/tv_synopsis"
+          android:layout_width="match_parent"
+          android:layout_height="wrap_content"
+          android:textSize="16sp"
+          android:layout_below="@+id/tv_rating"
+          android:layout_alignParentLeft="true"
+          android:layout_alignParentStart="true"
+          android:layout_marginTop="8dp"
+          />
+    </RelativeLayout>
+
+  </android.support.v4.widget.NestedScrollView>
+
+</android.support.design.widget.CoordinatorLayout>
