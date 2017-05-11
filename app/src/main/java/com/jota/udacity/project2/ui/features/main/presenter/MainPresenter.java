@@ -57,6 +57,7 @@ public class MainPresenter extends BasePresenter<MainActivity> {
         for (int i = 0; i < jsonArray.length(); i++) {
           JSONObject object = (JSONObject) jsonArray.get(i);
           MovieModel movieModel = new MovieModel();
+          movieModel.setId(object.getString(Repository.PARAM_ID));
           movieModel.setTitle(object.getString(Repository.PARAM_TITLE));
           movieModel.setSynopsis(object.getString(Repository.PARAM_SYNOPSIS));
           movieModel.setPoster(object.getString(Repository.PARAM_POSTER));

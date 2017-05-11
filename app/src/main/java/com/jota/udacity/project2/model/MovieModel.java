@@ -6,6 +6,7 @@ import com.jota.udacity.project2.repository.Repository;
 
 public class MovieModel implements Parcelable {
 
+  private String id;
   private String title;
   private String poster;
   private String synopsis;
@@ -13,6 +14,14 @@ public class MovieModel implements Parcelable {
   private String date;
 
   public MovieModel() {
+  }
+
+  public String getId() {
+    return id;
+  }
+
+  public void setId(String id) {
+    this.id = id;
   }
 
   public String getTitle() {
@@ -64,6 +73,7 @@ public class MovieModel implements Parcelable {
   }
 
   @Override public void writeToParcel(Parcel parcel, int i) {
+    parcel.writeString(id);
     parcel.writeString(title);
     parcel.writeString(poster);
     parcel.writeString(synopsis);
@@ -72,6 +82,7 @@ public class MovieModel implements Parcelable {
   }
 
   protected MovieModel(Parcel in) {
+    id = in.readString();
     title = in.readString();
     poster = in.readString();
     synopsis = in.readString();
