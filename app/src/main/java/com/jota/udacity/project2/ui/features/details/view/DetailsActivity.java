@@ -1,10 +1,10 @@
 package com.jota.udacity.project2.ui.features.details.view;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
@@ -13,10 +13,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import com.jota.udacity.project2.R;
 import com.jota.udacity.project2.app.BaseActivity;
-import com.jota.udacity.project2.data.MovieContract;
 import com.jota.udacity.project2.model.MovieModel;
 import com.jota.udacity.project2.model.ReviewModel;
 import com.jota.udacity.project2.model.VideoModel;
@@ -34,6 +32,8 @@ public class DetailsActivity extends BaseActivity
   private static final String YOUTUBE_VIDEO = "https://www.youtube.com/watch?v=%s";
 
   private DetailsPresenter mDetailsPresenter;
+
+  private FloatingActionButton fab;
 
   public static Intent getCallingIntent(Context context) {
     return new Intent(context, DetailsActivity.class);
@@ -53,11 +53,13 @@ public class DetailsActivity extends BaseActivity
     Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
     setSupportActionBar(toolbar);
     MovieModel movieModel = getIntent().getParcelableExtra(PARAM_MOVIE);
+    mDetailsPresenter.initializeData(this, movieModel);
 
     ImageView mPosterImageView = (ImageView) findViewById(R.id.iv_poster);
     TextView mDateTextView = (TextView) findViewById(R.id.tv_date);
     TextView mRatingTextView = (TextView) findViewById(R.id.tv_rating);
     TextView mSynopsisTextView = (TextView) findViewById(R.id.tv_synopsis);
+    fab = (FloatingActionButton) findViewById(R.id.fab_favourite);
 
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setTitle(movieModel.getTitle());
@@ -65,9 +67,9 @@ public class DetailsActivity extends BaseActivity
     mDateTextView.setText(movieModel.getDate());
     mRatingTextView.setText(movieModel.getRating());
     mSynopsisTextView.setText(movieModel.getSynopsis());
-    mDetailsPresenter.getDetailsMovie(movieModel.getId());
-
-    addFavorite(movieModel);
+    fab.setImageDrawable(getResources().getDrawable(
+        mDetailsPresenter.isFavouriteMovie() ? R.drawable.ic_star : R.drawable.ic_star_border));
+    fab.setOnClickListener(fabClickListener);
   }
 
   @Override protected void onSaveInstanceState(Bundle outState) {
@@ -121,20 +123,17 @@ public class DetailsActivity extends BaseActivity
     }
   }
 
-  private void addFavorite(MovieModel movieModel) {
-    ContentValues contentValues = new ContentValues();
-    contentValues.put(MovieContract.MovieEntry._ID, movieModel.getId());
-    contentValues.put(MovieContract.MovieEntry.COLUMN_TITLE, movieModel.getTitle());
-    contentValues.put(MovieContract.MovieEntry.COLUMN_POSTER, movieModel.getPoster());
-    contentValues.put(MovieContract.MovieEntry.COLUMN_SYNOPSIS, movieModel.getSynopsis());
-    contentValues.put(MovieContract.MovieEntry.COLUMN_RATING, movieModel.getRating());
-    contentValues.put(MovieContract.MovieEntry.COLUMN_DATE, movieModel.getDate());
-
-    Uri uri = getContentResolver().insert(MovieContract.MovieEntry.CONTENT_URI, contentValues);
-    if (uri != null) {
-      Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_SHORT).show();
+  private View.OnClickListener fabClickListener = new View.OnClickListener() {
+    @Override public void onClick(View view) {
+      if (mDetailsPresenter.isFavouriteMovie()) {
+        mDetailsPresenter.deleteFavourite();
+        fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_star_border));
+      } else {
+        mDetailsPresenter.addFavorite();
+        fab.setImageDrawable(getResources().getDrawable(R.drawable.ic_star));
+      }
     }
-  }
+  };
 
   @Override public void onClick(String keyMovie) {
     startActivity(

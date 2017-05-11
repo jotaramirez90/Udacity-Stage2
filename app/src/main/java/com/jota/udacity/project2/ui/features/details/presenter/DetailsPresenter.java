@@ -1,9 +1,15 @@
 package com.jota.udacity.project2.ui.features.details.presenter;
 
+import android.content.ContentValues;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.AsyncTask;
+import com.jota.udacity.project2.data.MovieContract;
+import com.jota.udacity.project2.data.Repository;
+import com.jota.udacity.project2.model.MovieModel;
 import com.jota.udacity.project2.model.ReviewModel;
 import com.jota.udacity.project2.model.VideoModel;
-import com.jota.udacity.project2.data.Repository;
 import com.jota.udacity.project2.ui.features.BasePresenter;
 import com.jota.udacity.project2.ui.features.details.view.DetailsActivity;
 import java.io.IOException;
@@ -18,9 +24,40 @@ import org.json.JSONObject;
 
 public class DetailsPresenter extends BasePresenter<DetailsActivity> {
 
-  public void getDetailsMovie(String movieId) {
-    getVideos(movieId);
-    getReviews(movieId);
+  private Context mContext;
+  private MovieModel mMovieModel;
+
+  public void initializeData(Context context, MovieModel movieModel) {
+    mContext = context;
+    mMovieModel = movieModel;
+    getVideos(mMovieModel.getId());
+    getReviews(mMovieModel.getId());
+  }
+
+  public boolean isFavouriteMovie() {
+    Cursor cursor = mContext.getContentResolver()
+        .query(Uri.withAppendedPath(MovieContract.MovieEntry.CONTENT_URI, mMovieModel.getId()),
+            null, null, null, null);
+    return cursor.getCount() > 0;
+  }
+
+  public Uri addFavorite() {
+    ContentValues contentValues = new ContentValues();
+    contentValues.put(MovieContract.MovieEntry._ID, mMovieModel.getId());
+    contentValues.put(MovieContract.MovieEntry.COLUMN_TITLE, mMovieModel.getTitle());
+    contentValues.put(MovieContract.MovieEntry.COLUMN_POSTER, mMovieModel.getPoster());
+    contentValues.put(MovieContract.MovieEntry.COLUMN_SYNOPSIS, mMovieModel.getSynopsis());
+    contentValues.put(MovieContract.MovieEntry.COLUMN_RATING, mMovieModel.getRating());
+    contentValues.put(MovieContract.MovieEntry.COLUMN_DATE, mMovieModel.getDate());
+
+    return mContext.getContentResolver()
+        .insert(MovieContract.MovieEntry.CONTENT_URI, contentValues);
+  }
+
+  public int deleteFavourite() {
+    return mContext.getContentResolver()
+        .delete(Uri.withAppendedPath(MovieContract.MovieEntry.CONTENT_URI, mMovieModel.getId()),
+            null, null);
   }
 
   private void getVideos(String movieId) {

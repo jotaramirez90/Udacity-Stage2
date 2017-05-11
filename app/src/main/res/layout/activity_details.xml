@@ -60,6 +60,7 @@
         android:orientation="vertical"
         android:layout_margin="@dimen/text_margin"
         >
+
       <ImageView
           android:id="@+id/iv_date"
           android:layout_width="30dp"
@@ -218,5 +219,17 @@
     </RelativeLayout>
 
   </android.support.v4.widget.NestedScrollView>
+
+  <android.support.design.widget.FloatingActionButton
+      android:id="@+id/fab_favourite"
+      android:layout_height="wrap_content"
+      android:layout_width="wrap_content"
+      android:layout_margin="16dp"
+      android:src="@drawable/ic_star_border"
+      app:borderWidth="12dp"
+      app:layout_anchor="@id/app_bar"
+      app:layout_anchorGravity="bottom|right|end"
+      app:fabSize="normal"
+      />
 
 </android.support.design.widget.CoordinatorLayout>
