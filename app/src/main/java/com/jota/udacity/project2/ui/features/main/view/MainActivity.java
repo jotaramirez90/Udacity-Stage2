@@ -71,6 +71,9 @@ public class MainActivity extends BaseActivity
       case R.id.action_top:
         mMainPresenter.getTopMovies();
         break;
+      case R.id.action_favourite:
+        mMainPresenter.getFavorites(this);
+        break;
     }
     return super.onOptionsItemSelected(item);
   }

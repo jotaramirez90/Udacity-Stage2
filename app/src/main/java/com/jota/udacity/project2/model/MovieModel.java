@@ -2,7 +2,7 @@ package com.jota.udacity.project2.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.jota.udacity.project2.repository.Repository;
+import com.jota.udacity.project2.data.Repository;
 
 public class MovieModel implements Parcelable {
 
@@ -42,6 +42,10 @@ public class MovieModel implements Parcelable {
 
   public void setPoster(String poster) {
     this.poster = poster;
+  }
+
+  public String getPoster() {
+    return poster;
   }
 
   public String getSynopsis() {

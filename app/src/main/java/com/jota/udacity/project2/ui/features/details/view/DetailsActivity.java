@@ -1,5 +1,6 @@
 package com.jota.udacity.project2.ui.features.details.view;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
@@ -12,8 +13,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.jota.udacity.project2.R;
 import com.jota.udacity.project2.app.BaseActivity;
+import com.jota.udacity.project2.data.MovieContract;
 import com.jota.udacity.project2.model.MovieModel;
 import com.jota.udacity.project2.model.ReviewModel;
 import com.jota.udacity.project2.model.VideoModel;
@@ -63,6 +66,8 @@ public class DetailsActivity extends BaseActivity
     mRatingTextView.setText(movieModel.getRating());
     mSynopsisTextView.setText(movieModel.getSynopsis());
     mDetailsPresenter.getDetailsMovie(movieModel.getId());
+
+    addFavorite(movieModel);
   }
 
   @Override protected void onSaveInstanceState(Bundle outState) {
@@ -113,6 +118,21 @@ public class DetailsActivity extends BaseActivity
     } else {
       TextView mVideosEmptyText = (TextView) findViewById(R.id.tv_empty_reviews);
       mVideosEmptyText.setVisibility(View.VISIBLE);
+    }
+  }
+
+  private void addFavorite(MovieModel movieModel) {
+    ContentValues contentValues = new ContentValues();
+    contentValues.put(MovieContract.MovieEntry._ID, movieModel.getId());
+    contentValues.put(MovieContract.MovieEntry.COLUMN_TITLE, movieModel.getTitle());
+    contentValues.put(MovieContract.MovieEntry.COLUMN_POSTER, movieModel.getPoster());
+    contentValues.put(MovieContract.MovieEntry.COLUMN_SYNOPSIS, movieModel.getSynopsis());
+    contentValues.put(MovieContract.MovieEntry.COLUMN_RATING, movieModel.getRating());
+    contentValues.put(MovieContract.MovieEntry.COLUMN_DATE, movieModel.getDate());
+
+    Uri uri = getContentResolver().insert(MovieContract.MovieEntry.CONTENT_URI, contentValues);
+    if (uri != null) {
+      Toast.makeText(getBaseContext(), uri.toString(), Toast.LENGTH_SHORT).show();
     }
   }
 

@@ -1,8 +1,11 @@
 package com.jota.udacity.project2.ui.features.main.presenter;
 
+import android.content.Context;
+import android.database.Cursor;
 import android.os.AsyncTask;
+import com.jota.udacity.project2.data.MovieContract;
+import com.jota.udacity.project2.data.Repository;
 import com.jota.udacity.project2.model.MovieModel;
-import com.jota.udacity.project2.repository.Repository;
 import com.jota.udacity.project2.ui.features.BasePresenter;
 import com.jota.udacity.project2.ui.features.main.view.MainActivity;
 import java.io.IOException;
@@ -23,6 +26,29 @@ public class MainPresenter extends BasePresenter<MainActivity> {
 
   public void getTopMovies() {
     new MoviesTask().execute(Repository.getTopMovies());
+  }
+
+  public void getFavorites(Context context) {
+    Cursor cursor = context.getContentResolver()
+        .query(MovieContract.MovieEntry.CONTENT_URI, null, null, null, null);
+    ArrayList<MovieModel> movieModels = new ArrayList<>();
+    while (cursor.moveToNext()) {
+      int idIndex = cursor.getColumnIndex(MovieContract.MovieEntry._ID);
+      int titleIndex = cursor.getColumnIndex(MovieContract.MovieEntry.COLUMN_TITLE);
+      int posterIndex = cursor.getColumnIndex(MovieContract.MovieEntry.COLUMN_POSTER);
+      int synopsisIndex = cursor.getColumnIndex(MovieContract.MovieEntry.COLUMN_SYNOPSIS);
+      int ratingIndex = cursor.getColumnIndex(MovieContract.MovieEntry.COLUMN_RATING);
+      int dateIndex = cursor.getColumnIndex(MovieContract.MovieEntry.COLUMN_DATE);
+      MovieModel movieModel = new MovieModel();
+      movieModel.setId(cursor.getString(idIndex));
+      movieModel.setTitle(cursor.getString(titleIndex));
+      movieModel.setPoster(cursor.getString(posterIndex));
+      movieModel.setSynopsis(cursor.getString(synopsisIndex));
+      movieModel.setRating(cursor.getString(ratingIndex));
+      movieModel.setDate(cursor.getString(dateIndex));
+      movieModels.add(movieModel);
+    }
+    mView.setMovies(movieModels);
   }
 
   private class MoviesTask extends AsyncTask<URL, Void, String> {

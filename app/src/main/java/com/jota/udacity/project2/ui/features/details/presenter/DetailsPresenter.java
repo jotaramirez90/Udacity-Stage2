@@ -3,7 +3,7 @@ package com.jota.udacity.project2.ui.features.details.presenter;
 import android.os.AsyncTask;
 import com.jota.udacity.project2.model.ReviewModel;
 import com.jota.udacity.project2.model.VideoModel;
-import com.jota.udacity.project2.repository.Repository;
+import com.jota.udacity.project2.data.Repository;
 import com.jota.udacity.project2.ui.features.BasePresenter;
 import com.jota.udacity.project2.ui.features.details.view.DetailsActivity;
 import java.io.IOException;
