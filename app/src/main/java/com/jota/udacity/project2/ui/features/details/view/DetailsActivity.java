@@ -18,6 +18,7 @@ import com.jota.udacity.project2.model.MovieModel;
 import com.jota.udacity.project2.model.ReviewModel;
 import com.jota.udacity.project2.model.VideoModel;
 import com.jota.udacity.project2.ui.features.BasePresenter;
+import com.jota.udacity.project2.ui.features.details.adapter.ReviewAdapter;
 import com.jota.udacity.project2.ui.features.details.adapter.VideosAdapter;
 import com.jota.udacity.project2.ui.features.details.presenter.DetailsPresenter;
 import com.squareup.picasso.Picasso;
@@ -82,18 +83,37 @@ public class DetailsActivity extends BaseActivity
   public void setVideos(ArrayList<VideoModel> videoModels) {
     ProgressBar mVideosProgressBar = (ProgressBar) findViewById(R.id.pb_videos);
     mVideosProgressBar.setVisibility(View.GONE);
-    RecyclerView mVideosRecyclerView = (RecyclerView) findViewById(R.id.rv_videos);
-    mVideosRecyclerView.setLayoutManager(
-        new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-    mVideosRecyclerView.setHasFixedSize(true);
-    mVideosRecyclerView.setNestedScrollingEnabled(false);
-    VideosAdapter adapter = new VideosAdapter(this);
-    adapter.setVideos(videoModels);
-    mVideosRecyclerView.setAdapter(adapter);
+    if (videoModels.size() >= 0) {
+      RecyclerView mVideosRecyclerView = (RecyclerView) findViewById(R.id.rv_videos);
+      mVideosRecyclerView.setLayoutManager(
+          new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+      mVideosRecyclerView.setHasFixedSize(true);
+      mVideosRecyclerView.setNestedScrollingEnabled(false);
+      VideosAdapter adapter = new VideosAdapter(this);
+      adapter.setVideos(videoModels);
+      mVideosRecyclerView.setAdapter(adapter);
+    } else {
+      TextView mVideosEmptyText = (TextView) findViewById(R.id.tv_empty_videos);
+      mVideosEmptyText.setVisibility(View.VISIBLE);
+    }
   }
 
   public void setReviews(ArrayList<ReviewModel> reviewModels) {
-    reviewModels.toString();
+    ProgressBar mVideosProgressBar = (ProgressBar) findViewById(R.id.pb_review);
+    mVideosProgressBar.setVisibility(View.GONE);
+    if (reviewModels.size() > 0) {
+      RecyclerView mVideosRecyclerView = (RecyclerView) findViewById(R.id.rv_reviews);
+      mVideosRecyclerView.setLayoutManager(
+          new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+      mVideosRecyclerView.setHasFixedSize(true);
+      mVideosRecyclerView.setNestedScrollingEnabled(false);
+      ReviewAdapter adapter = new ReviewAdapter();
+      adapter.setReviews(reviewModels);
+      mVideosRecyclerView.setAdapter(adapter);
+    } else {
+      TextView mVideosEmptyText = (TextView) findViewById(R.id.tv_empty_reviews);
+      mVideosEmptyText.setVisibility(View.VISIBLE);
+    }
   }
 
   @Override public void onClick(String keyMovie) {

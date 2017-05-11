@@ -8,5 +8,7 @@
   <!--Details Screen-->
   <string name="title_videos">Videos</string>
   <string name="title_reviews">Reviews</string>
+  <string name="videos_empty">No videos</string>
+  <string name="reviews_empty">No reviews</string>
 
 </resources>
