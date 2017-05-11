@@ -1,6 +1,10 @@
 # Udacity-Stage2
 Stage 2: Trailers, Reviews, and Favorites
 
+<img src="art/main.png" width="200px" height="356px" />
+<img src="art/details.png" width="200px" height="356px" />
+<img src="art/details_review.png" width="200px" height="356px" />
+
 # User Experience
 The app will:
 * Allow users to view and play trailers.
