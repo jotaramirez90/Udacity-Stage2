@@ -12,4 +12,7 @@
   <string name="videos_empty">No videos</string>
   <string name="reviews_empty">No reviews</string>
 
+  <!--Error-->
+  <string name="error_network">Network error</string>
+
 </resources>

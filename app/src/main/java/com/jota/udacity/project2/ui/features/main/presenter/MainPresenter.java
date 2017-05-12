@@ -76,24 +76,28 @@ public class MainPresenter extends BasePresenter<MainActivity> {
 
     @Override protected void onPostExecute(String response) {
       super.onPostExecute(response);
-      try {
-        ArrayList<MovieModel> movieModels = new ArrayList<>();
-        JSONObject jsonObject = new JSONObject(response);
-        JSONArray jsonArray = jsonObject.getJSONArray(Repository.PARAM_RESULTS);
-        for (int i = 0; i < jsonArray.length(); i++) {
-          JSONObject object = (JSONObject) jsonArray.get(i);
-          MovieModel movieModel = new MovieModel();
-          movieModel.setId(object.getString(Repository.PARAM_ID));
-          movieModel.setTitle(object.getString(Repository.PARAM_TITLE));
-          movieModel.setSynopsis(object.getString(Repository.PARAM_SYNOPSIS));
-          movieModel.setPoster(object.getString(Repository.PARAM_POSTER));
-          movieModel.setDate(object.getString(Repository.PARAM_DATE));
-          movieModel.setRating(object.getString(Repository.PARAM_RATING));
-          movieModels.add(movieModel);
+      if (response != null) {
+        try {
+          ArrayList<MovieModel> movieModels = new ArrayList<>();
+          JSONObject jsonObject = new JSONObject(response);
+          JSONArray jsonArray = jsonObject.getJSONArray(Repository.PARAM_RESULTS);
+          for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject object = (JSONObject) jsonArray.get(i);
+            MovieModel movieModel = new MovieModel();
+            movieModel.setId(object.getString(Repository.PARAM_ID));
+            movieModel.setTitle(object.getString(Repository.PARAM_TITLE));
+            movieModel.setSynopsis(object.getString(Repository.PARAM_SYNOPSIS));
+            movieModel.setPoster(object.getString(Repository.PARAM_POSTER));
+            movieModel.setDate(object.getString(Repository.PARAM_DATE));
+            movieModel.setRating(object.getString(Repository.PARAM_RATING));
+            movieModels.add(movieModel);
+          }
+          mView.setMovies(movieModels);
+        } catch (JSONException e) {
+          e.printStackTrace();
         }
-        mView.setMovies(movieModels);
-      } catch (JSONException e) {
-        e.printStackTrace();
+      } else {
+        mView.showError();
       }
     }
   }

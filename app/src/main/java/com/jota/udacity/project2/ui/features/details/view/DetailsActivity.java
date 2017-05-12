@@ -63,7 +63,10 @@ public class DetailsActivity extends BaseActivity
 
     getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     getSupportActionBar().setTitle(movieModel.getTitle());
-    Picasso.with(this).load(movieModel.getBigPoster()).into(mPosterImageView);
+    Picasso.with(this)
+        .load(movieModel.getBigPoster())
+        .error(R.drawable.ph_movie)
+        .into(mPosterImageView);
     mDateTextView.setText(movieModel.getDate());
     mRatingTextView.setText(movieModel.getRating());
     mSynopsisTextView.setText(movieModel.getSynopsis());
@@ -90,7 +93,7 @@ public class DetailsActivity extends BaseActivity
   public void setVideos(ArrayList<VideoModel> videoModels) {
     ProgressBar mVideosProgressBar = (ProgressBar) findViewById(R.id.pb_videos);
     mVideosProgressBar.setVisibility(View.GONE);
-    if (videoModels.size() >= 0) {
+    if (videoModels.size() > 0) {
       RecyclerView mVideosRecyclerView = (RecyclerView) findViewById(R.id.rv_videos);
       mVideosRecyclerView.setLayoutManager(
           new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -118,8 +121,8 @@ public class DetailsActivity extends BaseActivity
       adapter.setReviews(reviewModels);
       mVideosRecyclerView.setAdapter(adapter);
     } else {
-      TextView mVideosEmptyText = (TextView) findViewById(R.id.tv_empty_reviews);
-      mVideosEmptyText.setVisibility(View.VISIBLE);
+      TextView mReviewEmptyText = (TextView) findViewById(R.id.tv_empty_reviews);
+      mReviewEmptyText.setVisibility(View.VISIBLE);
     }
   }
 

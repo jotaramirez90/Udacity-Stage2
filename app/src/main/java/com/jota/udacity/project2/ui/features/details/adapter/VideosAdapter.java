@@ -31,6 +31,7 @@ public class VideosAdapter extends RecyclerView.Adapter<VideosAdapter.VideosAdap
     VideoModel videoModel = mVideos.get(position);
     Picasso.with(holder.itemView.getContext())
         .load(String.format(YOUTUBE_THUMBNAIL, videoModel.getKey()))
+        .error(R.drawable.ph_movie)
         .into(holder.mPreviewImage);
     holder.mTitleText.setText(videoModel.getName());
     holder.mTypeText.setText(videoModel.getType());

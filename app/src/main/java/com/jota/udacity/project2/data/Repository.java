@@ -6,7 +6,7 @@ import java.net.URL;
 
 public class Repository {
 
-  private static final String API_KEY = "b65c630daf7630f6308233247a562c35";
+  private static final String API_KEY = "YOUR_API_KEY";
   private static final String BASE_URL = "https://api.themoviedb.org/3/movie/";
   public static final String BASE_IMAGE_URL = "http://image.tmdb.org/t/p/w342/";
   public static final String BASE_BIG_IMAGE_URL = "http://image.tmdb.org/t/p/w500/";

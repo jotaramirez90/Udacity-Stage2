@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import com.jota.udacity.project2.R;
 import com.jota.udacity.project2.app.BaseActivity;
 import com.jota.udacity.project2.app.navigator.Navigator;
@@ -88,6 +89,11 @@ public class MainActivity extends BaseActivity
     mMainArrayAdapter = new MainArrayAdapter(this, movieModels);
     mMainGridView.setAdapter(mMainArrayAdapter);
     mMainGridView.setVisibility(View.VISIBLE);
+  }
+
+  public void showError() {
+    Toast.makeText(this, getResources().getString(R.string.error_network), Toast.LENGTH_SHORT)
+        .show();
   }
 
   @Override public void onItemClick(MovieModel movieModel) {

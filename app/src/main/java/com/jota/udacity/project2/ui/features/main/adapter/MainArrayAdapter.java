@@ -31,7 +31,10 @@ public class MainArrayAdapter extends ArrayAdapter<MovieModel> {
       convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_movie, parent, false);
     }
     ImageView posterImageView = (ImageView) convertView.findViewById(R.id.iv_poster);
-    Picasso.with(getContext()).load(movieModel.getNormalPoster()).into(posterImageView);
+    Picasso.with(getContext())
+        .load(movieModel.getNormalPoster())
+        .error(R.drawable.ph_movie)
+        .into(posterImageView);
     convertView.setOnClickListener(new View.OnClickListener() {
       @Override public void onClick(View view) {
         mListener.onItemClick(movieModel);

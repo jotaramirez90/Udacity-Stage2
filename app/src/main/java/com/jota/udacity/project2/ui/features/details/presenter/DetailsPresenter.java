@@ -93,24 +93,26 @@ public class DetailsPresenter extends BasePresenter<DetailsActivity> {
 
     @Override protected void onPostExecute(String response) {
       super.onPostExecute(response);
-      try {
-        ArrayList<VideoModel> videoModels = new ArrayList<>();
-        JSONObject jsonObject = new JSONObject(response);
-        JSONArray jsonArray = jsonObject.getJSONArray(Repository.PARAM_RESULTS);
-        for (int i = 0; i < jsonArray.length(); i++) {
-          JSONObject object = (JSONObject) jsonArray.get(i);
-          VideoModel videoModel = new VideoModel();
-          videoModel.setId(object.getString(Repository.PARAM_ID));
-          videoModel.setKey(object.getString(Repository.PARAM_KEY));
-          videoModel.setName(object.getString(Repository.PARAM_NAME));
-          videoModel.setSite(object.getString(Repository.PARAM_SITE));
-          videoModel.setType(object.getString(Repository.PARAM_TYPE));
-          videoModels.add(videoModel);
+      ArrayList<VideoModel> videoModels = new ArrayList<>();
+      if (response != null) {
+        try {
+          JSONObject jsonObject = new JSONObject(response);
+          JSONArray jsonArray = jsonObject.getJSONArray(Repository.PARAM_RESULTS);
+          for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject object = (JSONObject) jsonArray.get(i);
+            VideoModel videoModel = new VideoModel();
+            videoModel.setId(object.getString(Repository.PARAM_ID));
+            videoModel.setKey(object.getString(Repository.PARAM_KEY));
+            videoModel.setName(object.getString(Repository.PARAM_NAME));
+            videoModel.setSite(object.getString(Repository.PARAM_SITE));
+            videoModel.setType(object.getString(Repository.PARAM_TYPE));
+            videoModels.add(videoModel);
+          }
+        } catch (JSONException e) {
+          e.printStackTrace();
         }
-        mView.setVideos(videoModels);
-      } catch (JSONException e) {
-        e.printStackTrace();
       }
+      mView.setVideos(videoModels);
     }
   }
 
@@ -139,22 +141,24 @@ public class DetailsPresenter extends BasePresenter<DetailsActivity> {
 
     @Override protected void onPostExecute(String response) {
       super.onPostExecute(response);
-      try {
-        ArrayList<ReviewModel> reviewModels = new ArrayList<>();
-        JSONObject jsonObject = new JSONObject(response);
-        JSONArray jsonArray = jsonObject.getJSONArray(Repository.PARAM_RESULTS);
-        for (int i = 0; i < jsonArray.length(); i++) {
-          JSONObject object = (JSONObject) jsonArray.get(i);
-          ReviewModel reviewModel = new ReviewModel();
-          reviewModel.setId(object.getString(Repository.PARAM_ID));
-          reviewModel.setAuthor(object.getString(Repository.PARAM_AUTHOR));
-          reviewModel.setContent(object.getString(Repository.PARAM_CONTENT));
-          reviewModels.add(reviewModel);
+      ArrayList<ReviewModel> reviewModels = new ArrayList<>();
+      if (response != null) {
+        try {
+          JSONObject jsonObject = new JSONObject(response);
+          JSONArray jsonArray = jsonObject.getJSONArray(Repository.PARAM_RESULTS);
+          for (int i = 0; i < jsonArray.length(); i++) {
+            JSONObject object = (JSONObject) jsonArray.get(i);
+            ReviewModel reviewModel = new ReviewModel();
+            reviewModel.setId(object.getString(Repository.PARAM_ID));
+            reviewModel.setAuthor(object.getString(Repository.PARAM_AUTHOR));
+            reviewModel.setContent(object.getString(Repository.PARAM_CONTENT));
+            reviewModels.add(reviewModel);
+          }
+        } catch (JSONException e) {
+          e.printStackTrace();
         }
-        mView.setReviews(reviewModels);
-      } catch (JSONException e) {
-        e.printStackTrace();
       }
+      mView.setReviews(reviewModels);
     }
   }
 }
